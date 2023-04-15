@@ -4,38 +4,41 @@ from __future__ import unicode_literals, print_function, division
 
 # Static values
 __version__ = '3.17.0'
-NAME         = 'xml2rfc'
-VERSION      = [ int(i) if i.isdigit() else i for i in __version__.split('.') ]
-CACHES       = ['/var/cache/xml2rfc', '~/.cache/xml2rfc']  # Ordered by priority
+
+NAME = 'xml2rfc'
+VERSION = [int(i) if i.isdigit() else i for i in __version__.split('.')]
+CACHES = ['/var/cache/xml2rfc', '~/.cache/xml2rfc']  # Ordered by priority
 CACHE_PREFIX = ''
-NET_SUBDIRS  = ['bibxml', 'bibxml-misc', 'bibxml-ids', 'bibxml-w3c', 'bibxml-3gpp', 'bibxml-ieee', 'bibxml-rfcsubseries']
+NET_SUBDIRS = ['bibxml', 'bibxml-misc', 'bibxml-ids', 'bibxml-w3c', 'bibxml-3gpp', 'bibxml-ieee', 'bibxml-rfcsubseries']
 V3_PI_TARGET = 'v3xml2rfc'
 
-from xml2rfc.parser import  XmlRfcError, CachingResolver, XmlRfcParser, XmlRfc
+from xml2rfc.parser import XmlRfcError, CachingResolver, XmlRfcParser, XmlRfc
 
-from xml2rfc.writers import ( BaseRfcWriter, RawTextRfcWriter, PaginatedTextRfcWriter,
-	 HtmlRfcWriter, NroffRfcWriter, ExpandedXmlWriter, RfcWriterError,
-         V2v3XmlWriter, PrepToolWriter, TextWriter, HtmlWriter, PdfWriter,
-         ExpandV3XmlWriter, UnPrepWriter, DocWriter
-     )
+from xml2rfc.writers import (BaseRfcWriter, RawTextRfcWriter, PaginatedTextRfcWriter,
+                             HtmlRfcWriter, NroffRfcWriter, ExpandedXmlWriter, RfcWriterError,
+                             V2v3XmlWriter, PrepToolWriter, TextWriter, HtmlWriter, PdfWriter,
+                             ExpandV3XmlWriter, UnPrepWriter, DocWriter, MarkdownWriter
+                             )
 
 # This defines what 'from xml2rfc import *' actually imports:
 __all__ = ['XmlRfcError', 'CachingResolver', 'XmlRfcParser', 'XmlRfc',
            'BaseRfcWriter', 'RawTextRfcWriter', 'PaginatedTextRfcWriter',
            'HtmlRfcWriter', 'NroffRfcWriter', 'ExpandedXmlWriter',
-           'RfcWriterError', 'V2v3XmlWriter', 'PrepToolWriter', 'TextWriter',
-           'HtmlWriter', 'PdfWriter', 'ExpandV3XmlWriter', 'UnPrepWriter', 
+           'RfcWriterError', 'V2v3XmlWriter', 'PrepToolWriter', 'TextWriter', 'MarkdownWriter',
+           'HtmlWriter', 'PdfWriter', 'ExpandV3XmlWriter', 'UnPrepWriter',
            'DocWriter',
-       ]
+           ]
 
 try:
     import weasyprint
+
     HAVE_WEASYPRINT = True
 except (ImportError, OSError, ValueError):
     weasyprint = False
     HAVE_WEASYPRINT = False
 try:
     from weasyprint.text.ffi import pango
+
     HAVE_PANGO = True
     PANGO_VERSION = pango.pango_version
 except (ImportError, OSError, AttributeError):
@@ -70,8 +73,8 @@ def get_versions():
 
     versions.sort(key=lambda x: x[0].lower())
     versions = [
-            (NAME, __version__),
-            ('Python', sys.version.split()[0]),
-        ] + versions
+                   (NAME, __version__),
+                   ('Python', sys.version.split()[0]),
+               ] + versions
 
     return versions

@@ -85,9 +85,9 @@ def slugify_name(name):
     m = 2
     while slug[:n] in seen_slugs and n < len(slug) and n<40:
         n += 1
-    while slug[:n]+'-%s'%m in seen_slugs and m < 99:
+    while slug[:n]+'-%s'%m in seen_slugs and m < 300:
         m += 1
-    if m == 99 and slug[:n]+'-%s'%m in seen_slugs:
+    if m == 300 and slug[:n]+'-%s'%m in seen_slugs:
         raise RuntimeError("Too many overlapping <name> content instances; cannot create a sensible slugifiedName attribute")
     if slug[:n] in seen_slugs:
         slug = slug[:n]+'-%s'%m
